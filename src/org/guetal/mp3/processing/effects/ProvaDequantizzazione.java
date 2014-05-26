@@ -66,7 +66,7 @@ public class ProvaDequantizzazione {
                 decoder.decodeFrame(Constants.DEQUANTIZED_DOMAIN);
                 
                 float ro [][][] = decoder.get_ro();
-                FrameData fd = decoder.get_frame_info();
+                FrameData fd = decoder.getFrameInfo();
                 
                 float [][] energy = {{0.0f, 0.0f}, {0.0f, 0.0f}};
                 

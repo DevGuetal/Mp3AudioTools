@@ -20,10 +20,7 @@ import org.guetal.mp3.processing.effects.Paste;
  * @version
  */
 public class CopyAndPasteExample {
-    //private String fileName = "/audio/age.mp3";
-    //private String fileName = "/audio/mic.mp3";
     private String fileName = "/audio/U2.mp3";
-    //private String fileName = "/audio/440-128-CBR.mp3";
     private Paste effect;
     private Copy copy;
     private byte [] stream;
@@ -37,15 +34,13 @@ public class CopyAndPasteExample {
         
         
         try {
-            long tempo1=System.currentTimeMillis();
+            long time1=System.currentTimeMillis();
             
             FrameBuffer buffer  = copy.copy(is, 0, 100);
             stream = effect.paste(is2, 20, buffer);
             
-            //is.close();
-            //is2.close();
-            long tempo2=System.currentTimeMillis();
-            System.out.println("time elapsed (ms): " + (tempo2 - tempo1));
+            long time2=System.currentTimeMillis();
+            System.out.println("time elapsed (ms): " + (time2 - time1));
             
             is = getClass().getResourceAsStream(fileName);
             Analysis.average_bitrate(is);
@@ -53,10 +48,6 @@ public class CopyAndPasteExample {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
-        
-//        file.saveMedia(stream, "audio/");
-//        System.out.println("FILE SAVED");
     }
     
     public void pauseApp() {

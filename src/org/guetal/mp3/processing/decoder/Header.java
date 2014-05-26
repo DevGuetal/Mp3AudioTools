@@ -227,7 +227,7 @@ public final class Header {
                 nSlots = CommonMethods.calNSlots(framesize, h_mode, h_protection_bit);
             
             else{
-                System.out.println("sorry,doesn't support mpeg2 frames - only LayerIII is supported");
+                LOGGER.warning("sorry,doesn't support mpeg2 frames - only LayerIII is supported");
                 System.exit(1);
             }
             
