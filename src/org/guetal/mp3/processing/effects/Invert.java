@@ -61,22 +61,22 @@ public class Invert {
             
             if (cont < fStart || cont >= fEnd ) {
                 try{
-                    fd = reader.decode_frame(opt);
+                    fd = reader.decodeFrame(opt);
                 } catch (Exception e){
                     System.out.println("End of file");
                     break;
                 }
-                reader.store_data(fd, reader.getMainData());
+                reader.storeData(fd, reader.getMainData());
             } else {
                 
                 FrameDataUnpacked fd_u = frame_buffer.get_entry();
-                reader.store_data(fd_u, fd_u.get_data());
+                reader.storeData(fd_u, fd_u.get_data());
             }
             
             cont++;
         } while(true);
         
-        mp3_byte_stream = reader.get_stream();
+        mp3_byte_stream = reader.getStream();
         
         return mp3_byte_stream;
     }

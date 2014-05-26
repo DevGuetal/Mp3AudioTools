@@ -212,7 +212,7 @@ public final class HuffmanEnc {
             case 32000: scalefac_band_long  = sfBandIndex[5][0]; scalefac_band_short = sfBandIndex[5][1]; break;
         }*/
         
-        int freq_index = fd.get_fs_index();
+        int freq_index = fd.getFsIndex();
         scalefac_band_long = sfBandIndex[freq_index][0];
         scalefac_band_short = sfBandIndex[freq_index][1];
         

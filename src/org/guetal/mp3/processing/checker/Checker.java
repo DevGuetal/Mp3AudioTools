@@ -40,7 +40,7 @@ public class Checker {
 		do{
 			LOGGER.info("frame " + cont);
 			try{
-				fd1 = reader1.decode_frame(opt);
+				fd1 = reader1.decodeFrame(opt);
 			} catch (Exception e){
 				LOGGER.warning("\nEnd of file 1. If end is unexpeted at this frame, probably main_data_begin or part2_3_length is wrong");
 				break;
@@ -62,7 +62,7 @@ public class Checker {
 		do{
 			LOGGER.info("frame " + cont);
 			try{
-				fd2 = reader2.decode_frame(opt);
+				fd2 = reader2.decodeFrame(opt);
 			} catch (Exception e){
 				LOGGER.info("\nEnd of file 2. If end is unexpeted in at this frame, probably main_data_begin or part2_3_length is wrong");
 				break;
@@ -131,7 +131,7 @@ public class Checker {
 
 	public static void printSideInfo(FrameData fd){
 
-		LOGGER.info("side_info_enc -> main_data_beg: "+ fd.get_main_data_begin());
+		LOGGER.info("side_info_enc -> main_data_beg: "+ fd.getMainDataBegin());
 		for(int gr = 0; gr < fd.getMaxGr(); gr++)
 			for(int ch = 0; ch < fd.getChannels(); ch++) {
 				//Channel t = fd.
@@ -174,9 +174,9 @@ public class Checker {
 	public static void printSideInfo(FrameData fd1, FrameData fd2){
 
 		StringBuffer sb = new StringBuffer();
-		sb.append("side_info_enc -> main_data_beg: "+ fd1.get_main_data_begin());
-		sb.append(" | "+ fd2.get_main_data_begin());
-		if(fd1.get_main_data_begin() != fd2.get_main_data_begin())
+		sb.append("side_info_enc -> main_data_beg: "+ fd1.getMainDataBegin());
+		sb.append(" | "+ fd2.getMainDataBegin());
+		if(fd1.getMainDataBegin() != fd2.getMainDataBegin())
 			sb.append(" <--- DIFFERENT!!");
 		sb.append("\n");
 
@@ -351,7 +351,7 @@ public class Checker {
 
 
 
-		int end = fd_u1.get_md_len() > fd_u2.get_md_len() ? fd_u2.get_md_len(): fd_u1.get_md_len();
+		int end = fd_u1.getMdLen() > fd_u2.getMdLen() ? fd_u2.getMdLen(): fd_u1.getMdLen();
 
 		for(; i < end; i++){
 			StringBuffer sb = new StringBuffer();
@@ -388,8 +388,8 @@ public class Checker {
 			LOGGER.info(sb.toString());
 		}
 
-		if(fd_u1.get_md_len() > fd_u2.get_md_len()){
-			for(; i < fd_u1.get_md_len(); i++){
+		if(fd_u1.getMdLen() > fd_u2.getMdLen()){
+			for(; i < fd_u1.getMdLen(); i++){
 				StringBuffer sb = new StringBuffer();
 				sb.append("data of stream 1 ["+i+"]: "+ data1[i]);
 
@@ -404,8 +404,8 @@ public class Checker {
 			}
 		}
 
-		if(fd_u1.get_md_len() < fd_u2.get_md_len()){
-			for(; i < fd_u2.get_md_len(); i++){
+		if(fd_u1.getMdLen() < fd_u2.getMdLen()){
+			for(; i < fd_u2.getMdLen(); i++){
 				StringBuffer sb = new StringBuffer();
 				sb.append("data of stream 2 ["+i+"]: "+ data2[i]);
 
@@ -570,7 +570,7 @@ public class Checker {
 				(float)(fd_u.getPart23Length(1,0))/8 + (float)(fd_u.getPart23Length(1,1))/8);
 
 
-		for(int i = 0; i < fd_u.get_md_len(); i++){
+		for(int i = 0; i < fd_u.getMdLen(); i++){
 			StringBuffer sb = new StringBuffer(); 
 			sb.append("data["+i+"]: "+ data[i]);
 
@@ -586,7 +586,7 @@ public class Checker {
 
 	public static void print_info(FrameDataUnpacked fd_u){
 		LOGGER.info("\n  **** HEADER ****");
-		fd_u.printheaderInfo();
+		fd_u.printHeaderInfo();
 		LOGGER.info("\n  **** SIDE INFO ****");
 		printSideInfo(fd_u);
 		LOGGER.info("\n  **** MAIN DATA ****");

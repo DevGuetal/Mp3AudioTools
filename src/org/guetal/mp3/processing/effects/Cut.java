@@ -57,7 +57,7 @@ public class Cut {
             System.out.println("---------------------------------------------(Step 1 - Iteration number: " + cont + ")---------------------------------------------");
             
             try{
-                fd = reader.decode_frame(option);
+                fd = reader.decodeFrame(option);
             } catch (Exception e){
                 System.out.println("End of file");
                 break;
@@ -65,7 +65,7 @@ public class Cut {
             
             // effects
             if (cont < fStart || fEnd < cont){
-                reader.store_data(fd, reader.getMainData());
+                reader.storeData(fd, reader.getMainData());
             } else {
                 frame_buffer.add_entry(reader.getMainData(), fd);
             }
@@ -74,7 +74,7 @@ public class Cut {
         }
         while(true);
         
-        stream = reader.get_stream();
+        stream = reader.getStream();
         return frame_buffer;
     }
     

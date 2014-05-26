@@ -46,7 +46,7 @@ public class EnergyCalculation {
         {0f, 0f}};
         do{
             try{
-                fd = (FrameDataDequantized) manager.decode_frame(opt);
+                fd = (FrameDataDequantized) manager.decodeFrame(opt);
             } catch (Exception e){
                 System.out.println("End of file" );
                 break;

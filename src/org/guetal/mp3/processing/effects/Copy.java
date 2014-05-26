@@ -54,7 +54,7 @@ public class Copy {
             
             if(fEnd > cont){
                 try{
-                    fd = reader.decode_frame(opt);
+                    fd = reader.decodeFrame(opt);
                 } catch (NegativeArraySizeException e){
                     if ( fStart <= cont && cont <= fEnd)
                         System.out.println("WARNING: end of file reached before finishing to copy!");
@@ -88,7 +88,7 @@ public class Copy {
             System.out.println("---------------------------------------------(Step 1 - Iteration number: " + cont + ")---------------------------------------------");
             
             try{
-                fd = reader.decode_frame(opt);
+                fd = reader.decodeFrame(opt);
             } catch (Exception e){
                 break;
             }

@@ -144,7 +144,7 @@ public class LayerIIIEnc {
         int offset          = 0;
         int main_data_beg   = 0;
         
-        int main_data_len = fd.get_md_len();
+        int main_data_len = fd.getMdLen();
         int i = frame_num > 0? index - 1: 0;
         if( i < 0 ) i = SIZE - 1;
 
@@ -169,7 +169,7 @@ public class LayerIIIEnc {
         /* control of bitrate*/
         if(main_data_len - free_space > mpf[index].get_nSlots()){
             int bitrate_index = fd.getBitrateIndex();
-            int freq_index    = fd.get_fs_index();
+            int freq_index    = fd.getFsIndex();
             int version_index = 1;
             
             int bitrate = CommonMethods.bitrates[version_index][freq_index][bitrate_index + 1];

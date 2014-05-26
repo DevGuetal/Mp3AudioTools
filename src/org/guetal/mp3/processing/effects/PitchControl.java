@@ -1,4 +1,4 @@
-package org.guetal.mp3.processing.effects;
+//package org.guetal.mp3.processing.effects;
 ///*
 // * Filtering.java
 // *

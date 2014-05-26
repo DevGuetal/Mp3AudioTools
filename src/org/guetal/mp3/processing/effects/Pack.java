@@ -46,7 +46,7 @@ public class Pack {
             System.out.println("---------------------------------------------(Step 1 - Iteration number: " + cont + ")---------------------------------------------");
             
             try{
-                fd = reader.decode_frame(opt);
+                fd = reader.decodeFrame(opt);
 
             } catch (Exception e){
                 System.out.println("End of file");
@@ -54,13 +54,13 @@ public class Pack {
             }
             
             // effects
-            reader.store_data(fd, reader.getMainData());
+            reader.storeData(fd, reader.getMainData());
                         
             cont++;
         } while(true);
         
         
-        mp3_byte_stream = reader.get_stream();
+        mp3_byte_stream = reader.getStream();
         return mp3_byte_stream;
     }
 }

@@ -54,11 +54,11 @@ public class ProvaHuffman {
         Manager reader = new Manager(is);
         final int opt = Constants.QUANTIZED_DOMAIN;
         do{
-            FrameDataQuantized fd = (FrameDataQuantized) reader.decode_frame(opt);
+            FrameDataQuantized fd = (FrameDataQuantized) reader.decodeFrame(opt);
             System.out.println("---------------------------------------------(Step 1 - Iteration number: " + cont + ")---------------------------------------------");
             
             if(fd.getFramesize() > 1){
-                reader.encode_frame(fd);
+                reader.encodeFrame(fd);
                 //System.out.println(fd.getFramesize());
 //                int[] scfsi = fd.getScfsi(0);
 //                for(int gr = 0; gr < 2; gr++){
@@ -87,7 +87,7 @@ public class ProvaHuffman {
         //while(cont < 100);
           while(true);
         //   System.out.println("n_frames: " + n_frames);
-        stream = reader.get_stream();
+        stream = reader.getStream();
         
     }
     

@@ -62,7 +62,7 @@ public class ProvaDequantizzazione {
             
             //    System.out.println("\n\n---------------------------------------------(Step 1 - Iteration number: " + cont + ")---------------------------------------------");
             
-            if(header.framesize() > 0){
+            if(header.getFramesize() > 0){
                 decoder.decodeFrame(Constants.DEQUANTIZED_DOMAIN);
                 
                 float ro [][][] = decoder.get_ro();

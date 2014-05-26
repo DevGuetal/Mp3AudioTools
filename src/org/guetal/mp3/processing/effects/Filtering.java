@@ -51,7 +51,7 @@ public class Filtering {
             System.out.println("---------------------------------------------(Step 1 - Filtering - Iteration number: " + cont + ")---------------------------------------------");
             
             try{
-                FrameDataQuantized fd = (FrameDataQuantized) reader.decode_frame(opt);
+                FrameDataQuantized fd = (FrameDataQuantized) reader.decodeFrame(opt);
                 if((cont >= fStart) && (cont < fEnd)){
                     for(int gr = 0; gr < fd.getMaxGr(); gr++)
                         for(int ch = 0; ch < fd.getChannels(); ch++) {
@@ -133,7 +133,7 @@ public class Filtering {
                 }
                 
                 
-                reader.encode_frame(fd);
+                reader.encodeFrame(fd);
                 
                 bytes += fd.getFramesize();
                 
@@ -146,7 +146,7 @@ public class Filtering {
         }while(cont < 2000);
        // while(true);
         
-        stream = reader.get_stream();
+        stream = reader.getStream();
         
         
         return stream;

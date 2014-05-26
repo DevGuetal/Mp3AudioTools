@@ -19,10 +19,10 @@ package org.guetal.mp3.processing.decoder;
 
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.guetal.mp3.processing.commons.CommonMethods;
 import org.guetal.mp3.processing.commons.data.FrameData;
-import org.guetal.mp3.processing.encoder.LayerIIIEnc;
 
 
 /**
@@ -32,6 +32,8 @@ import org.guetal.mp3.processing.encoder.LayerIIIEnc;
  */
 public final class Header {
     
+	private final static Logger LOGGER = Logger.getLogger(Header.class.getName()); 
+	
     public final static int[] [] frequencies = CommonMethods.frequencies;
     
     /** Constant for LayerI version */
@@ -68,74 +70,7 @@ public final class Header {
     public final static int THIRTYTWO = 2;
     
     /** Description of the Field */
-    public final static int bitrates[] [] [] = CommonMethods.bitrates;
-//    {
-//        {{0
-//    /*
-//     *  free format
-//     */
-//                 ,32000,48000,56000,64000,80000,96000,
-//                 112000,128000,144000,160000,176000,192000,224000,256000,0},
-//                 {0
-//    /*
-//     *  free format
-//     */
-//                          ,8000,16000,24000,32000,40000,48000,
-//                          56000,64000,80000,96000,112000,128000,144000,160000,0},
-//                          {0
-//    /*
-//     *  free format
-//     */
-//                                   ,8000,16000,24000,32000,40000,48000,
-//                                   56000,64000,80000,96000,112000,128000,144000,160000,0}},
-//                                   {{0
-//    /*
-//     *  free format
-//     */
-//                                            ,32000,64000,96000,128000,160000,192000,
-//                                            224000,256000,288000,320000,352000,384000,416000,448000,0},
-//                                            {0
-//    /*
-//     *  free format
-//     */
-//                                                     ,32000,48000,56000,64000,80000,96000,
-//                                                     112000,128000,160000,192000,224000,256000,320000,384000,0},
-//                                                     {0
-//    /*
-//     *  free format
-//     */
-//                                                              ,32000,40000,48000,56000,64000,80000,
-//                                                              96000,112000,128000,160000,192000,224000,256000,320000,0}}
-//    };
-    
-    /** Description of the Field */
-   /* public final static String bitrate_str[] [] [] = {
-        {{"free format","32 kbit/s","48 kbit/s","56 kbit/s","64 kbit/s",
-                 "80 kbit/s","96 kbit/s","112 kbit/s","128 kbit/s","144 kbit/s",
-                 "160 kbit/s","176 kbit/s","192 kbit/s","224 kbit/s","256 kbit/s",
-                 "forbidden"},
-                 {"free format","8 kbit/s","16 kbit/s","24 kbit/s","32 kbit/s",
-                          "40 kbit/s","48 kbit/s","56 kbit/s","64 kbit/s","80 kbit/s",
-                          "96 kbit/s","112 kbit/s","128 kbit/s","144 kbit/s","160 kbit/s",
-                          "forbidden"},
-                          {"free format","8 kbit/s","16 kbit/s","24 kbit/s","32 kbit/s",
-                                   "40 kbit/s","48 kbit/s","56 kbit/s","64 kbit/s","80 kbit/s",
-                                   "96 kbit/s","112 kbit/s","128 kbit/s","144 kbit/s","160 kbit/s",
-                                   "forbidden"}},
-                                   {{"free format","32 kbit/s","64 kbit/s","96 kbit/s","128 kbit/s",
-                                            "160 kbit/s","192 kbit/s","224 kbit/s","256 kbit/s","288 kbit/s",
-                                            "320 kbit/s","352 kbit/s","384 kbit/s","416 kbit/s","448 kbit/s",
-                                            "forbidden"},
-                                            {"free format","32 kbit/s","48 kbit/s","56 kbit/s","64 kbit/s",
-                                                     "80 kbit/s","96 kbit/s","112 kbit/s","128 kbit/s","160 kbit/s",
-                                                     "192 kbit/s","224 kbit/s","256 kbit/s","320 kbit/s","384 kbit/s",
-                                                     "forbidden"},
-                                                     {"free format","32 kbit/s","40 kbit/s","48 kbit/s","56 kbit/s",
-                                                              "64 kbit/s","80 kbit/s","96 kbit/s","112 kbit/s","128 kbit/s",
-                                                              "160 kbit/s","192 kbit/s","224 kbit/s","256 kbit/s","320 kbit/s",
-                                                              "forbidden"}}
-    };*/
-    
+    public final static int bitrates[] [] [] = CommonMethods.bitrates;  
     
     public static int framesize;
     public static int nSlots;
@@ -192,7 +127,7 @@ public final class Header {
     /**
      * Returns an int containig framesize
      */
-    public int framesize(){
+    public int getFramesize(){
         return framesize;
     }
     
@@ -237,11 +172,11 @@ public final class Header {
             headerstring = stream.syncHeader(syncmode);
             if (syncmode == BitStream.INITIAL_SYNC) {
                 h_version = ((headerstring >>> 19) & 1);
-                System.out.println("MPEG version: "+h_version);
+                LOGGER.info("MPEG version: "+h_version);
                 if ((h_sample_frequency = ((headerstring >>> 10) & 3)) == 3) {
                     return;
                 }
-                System.out.println("Sampling frequency: " + frequencies[h_version] [h_sample_frequency]);
+                LOGGER.info("Sampling frequency: " + frequencies[h_version] [h_sample_frequency]);
             }
             h_layer = 4 - (headerstring >>> 17) & 3;
             // E.B Fix.
@@ -311,49 +246,22 @@ public final class Header {
         stream.parse_frame();
         
         // E.B Fix
-        if (h_protection_bit == 0) {
-            // frame contains a crc checksum
-            short checksum = (short) stream.readbits(16);
-        }
+//        if (h_protection_bit == 0) {
+//            // frame contains a crc checksum
+//            short checksum = (short) stream.readbits(16);
+//        }
         // End
     }
     
-    /**
-     * Calculates framesize in bytes excluding Header Size.
-     * nSlots is framesize excluding Header, CRC and Side Info
-     */
-    /* only supports mpeg1 frames; stripped out mpeg2 checking */
-//    private final void calFrameSize() {
-//   /*     framesize = (144 * bitrates[h_version] [h_layer - 1] [h_bitrate_index]) / frequencies[h_version] [h_sample_frequency];
-//        if(h_padding_bit != 0)
-//            framesize++;*/
-//        framesize = CommonMethods.calFrameSize(h_bitrate_index, h_padding_bit, frequencies[h_version] [h_sample_frequency]);
-//        
-//        if(h_version == MPEG1)
-//            nSlots = CommonMethods.calNSlots(framesize, h_mode, h_protection_bit);
-//        // E.B Fix
-//        //nSlots = framesize - ((h_mode == SINGLE_CHANNEL) ? 17 : 32) -  ((h_protection_bit!=0) ? 0 : 2) - 4;
-//        //nSlots = framesize - ((h_mode == SINGLE_CHANNEL) ? 17 : 32) - 4;
-//        // End.
-//        
-//        else{
-//            System.out.println("sorry,doesn't support mpeg2 frames - only LayerIII is supported");
-//            System.exit(1);
-//        }
-//        
-//        framesize -= 4;
-//    }
-//    
     public int get_channels(){
         int channels = 2;
-        String mode = "stereo";
         switch (h_mode) {
             case JOINT_STEREO:
-                mode = "joint_stereo"; channels = 2; break;
+                channels = 2; break;
             case DUAL_CHANNEL:
-                mode = "dual_channel"; channels = 2; break;
+                channels = 2; break;
             case SINGLE_CHANNEL:
-                mode = "single_channel"; channels = 1; break;
+                channels = 1; break;
         }
         
         return channels;
@@ -362,84 +270,9 @@ public final class Header {
     public int get_protection_bit(){
         return h_protection_bit;
     }
-    
-    public int get_framesize(){
-        return this.framesize;
-    }
-    //
-    /** */
-    
-//    public void create_main_info(LayerIIIEnc mp3){
-//        // modificare in futuro: va uniformata rispetto al resto delle classi
-//        int channels = 2;
-//
-//        String mode = "stereo";
-//        System.out.println(h_mode);
-//        switch (h_mode) {
-//            case JOINT_STEREO:
-//                mode = "joint_stereo"; channels = 2; break;
-//            case DUAL_CHANNEL:
-//                mode = "dual_channel"; channels = 2; break;
-//            case SINGLE_CHANNEL:
-//                mode = "single_channel"; channels = 1; break;
-//        }
-//
-//        channels = 2;
-//        boolean MS_stereo = false;
-//        boolean intensity_stereo = false;
-//
-//        switch (h_mode_extension) {
-//            case 1:
-//                MS_stereo = true; break;
-//            case 2:
-//                intensity_stereo = true; break;
-//            case 3:
-//                intensity_stereo = true; MS_stereo = true; break;
-//        }
-//        //System.out.print("[ok]\nheader: setting main_info.......");
-//        int fs = frequencies[h_version] [h_sample_frequency];
-//        int bitrate = bitrates[h_version] [h_layer - 1] [h_bitrate_index];
-//        mp3.init_frame(1, bitrate, fs, mode, intensity_stereo, MS_stereo, 0, channels);
-//    }
-//
-//
-//    public void create_main_info(LayerIIIEnc mp3, int channels){
-//        // modificare in futuro: va uniformata rispetto al resto delle classi
-//
-//        channels = 2;
-//        String mode = "stereo";
-//        switch (h_mode) {
-//            case JOINT_STEREO:
-//                mode = "joint_stereo"; channels = 2; break;
-//            case DUAL_CHANNEL:
-//                mode = "dual_channel"; channels = 2; break;
-//            case SINGLE_CHANNEL:
-//                mode = "single_channel"; channels = 1; break;
-//        }
-//
-//
-//        boolean MS_stereo = false;
-//        boolean intensity_stereo = false;
-//
-//        switch (h_mode_extension) {
-//            case 1:
-//                MS_stereo = true; break;
-//            case 2:
-//                intensity_stereo = true; break;
-//            case 3:
-//                intensity_stereo = true; MS_stereo = true; break;
-//        }
-//        //System.out.print("[ok]\nheader: setting main_info.......");
-//        int fs = frequencies[h_version] [h_sample_frequency];
-//        int bitrate = bitrates[h_version] [h_layer - 1] [h_bitrate_index];
-//        mp3.init_frame(1, bitrate, fs, mode, intensity_stereo, MS_stereo, 0, channels);
-//    }
+
     
     public void copy_info(FrameData fd){
-        // modificare in futuro: va uniformata rispetto al resto delle classi
-        
-         /*public void setInfo(int version, int bitrate, int fs, String mode, boolean intensity_stereo,
-            boolean MS_stereo, int emphasis, int channels, int h_mode, int h_protection_bit, int h_padding_bit) {*/
         int fs = frequencies[h_version] [h_sample_frequency];
         int bitrate = bitrates[h_version] [h_layer - 1] [h_bitrate_index];
         int channels = 2;
@@ -452,12 +285,7 @@ public final class Header {
                 mode = "dual_channel"; channels = 2; break;
             case SINGLE_CHANNEL:
                 mode = "single_channel"; channels = 1; break;
-        }
-        
-        
-        boolean MS_stereo = false;
-        boolean intensity_stereo = false;
-        
+        }      
         
         fd.setInfo(h_version, bitrate, fs, mode, h_mode_extension, h_emph, channels, h_mode, h_protection_bit, h_padding_bit);
         fd.setBitrateIndex(h_bitrate_index);
