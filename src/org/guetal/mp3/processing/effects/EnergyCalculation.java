@@ -10,12 +10,12 @@
 package org.guetal.mp3.processing.effects;
 
 import java.io.InputStream;
+import java.util.logging.Logger;
 
+import org.guetal.mp3.processing.checker.Checker;
 import org.guetal.mp3.processing.commons.Constants;
 import org.guetal.mp3.processing.commons.Manager;
-import org.guetal.mp3.processing.commons.data.FrameData;
 import org.guetal.mp3.processing.commons.data.FrameDataDequantized;
-import org.guetal.mp3.processing.commons.util.MathUtil;
 
 
 /**
@@ -26,7 +26,7 @@ public class EnergyCalculation {
     
     private FrameDataDequantized fd;
     
-    
+	private final static Logger LOGGER = Logger.getLogger(Checker.class.getName()); 
     
     /**
      * Creates a new instance of EnergyCalculation
@@ -48,13 +48,10 @@ public class EnergyCalculation {
             try{
                 fd = (FrameDataDequantized) manager.decodeFrame(opt);
             } catch (Exception e){
-                System.out.println("End of file" );
+            	LOGGER.info("End of file" );
                 break;
             }
-            
-            //System.out.println("\n\n---------------------------------------------(Step 1 - Filtering - Iteration number: " + cont + ")---------------------------------------------");
-            
-            
+
             if((cont >= fStart) && (cont < fEnd)){
                 for(int ch = 0; ch < fd.getChannels(); ch++)
                     for(int gr = 0; gr < fd.getMaxGr(); gr++){
@@ -79,7 +76,6 @@ public class EnergyCalculation {
             cont++;
         } while (true);
         
-        System.out.println("Frames processed: " + cont);
         return E;
     }
 }

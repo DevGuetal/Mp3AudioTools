@@ -9,14 +9,13 @@
 
 package org.guetal.mp3.processing.effects;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.mp3.processing.commons.Constants;
 import org.guetal.mp3.processing.commons.Manager;
 import org.guetal.mp3.processing.commons.data.FrameBuffer;
 import org.guetal.mp3.processing.commons.data.FrameData;
-import org.guetal.mp3.processing.commons.data.FrameDataUnpacked;
 
 
 /**
@@ -24,7 +23,9 @@ import org.guetal.mp3.processing.commons.data.FrameDataUnpacked;
  * @author Administrator
  */
 public class Copy {
-    private int tot;
+	
+	private final static Logger LOGGER = Logger.getLogger(Copy.class.getName()); 
+	
     private Manager reader;
     
     //private FrameDataUnpacked[] frame_buffer;
@@ -50,14 +51,13 @@ public class Copy {
         
         final int opt = Constants.HUFFMAN_DOMAIN;
         do{
-            System.out.println("---------------------------------------------(Step 1 - Iteration number: " + cont + ")---------------------------------------------");
-            
+
             if(fEnd > cont){
                 try{
                     fd = reader.decodeFrame(opt);
                 } catch (NegativeArraySizeException e){
                     if ( fStart <= cont && cont <= fEnd)
-                        System.out.println("WARNING: end of file reached before finishing to copy!");
+                    	LOGGER.warning("WARNING: end of file reached before finishing to copy!");
                     break;
                 }
                 // effects
@@ -75,7 +75,7 @@ public class Copy {
     public FrameBuffer copy(InputStream is, int fStart) throws Exception{
         
         
-        int cont = 0;
+        int count = 0;
         
         reader = new Manager(is);
         
@@ -85,20 +85,17 @@ public class Copy {
         
         final int opt = Constants.HUFFMAN_DOMAIN;
         do{
-            System.out.println("---------------------------------------------(Step 1 - Iteration number: " + cont + ")---------------------------------------------");
-            
             try{
                 fd = reader.decodeFrame(opt);
             } catch (Exception e){
                 break;
             }
             // effects
-            if (fStart <= cont){
+            if (fStart <= count){
                 buffer.add_entry(reader.getMainData(), fd);
             }
             
-            
-            cont++;
+            count++;
         } while(true);
         
         return buffer;

@@ -9,14 +9,13 @@
 
 package org.guetal.mp3.processing.effects;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.mp3.processing.commons.Constants;
 import org.guetal.mp3.processing.commons.Manager;
 import org.guetal.mp3.processing.commons.data.FrameBuffer;
 import org.guetal.mp3.processing.commons.data.FrameData;
-import org.guetal.mp3.processing.commons.data.FrameDataUnpacked;
 
 
 /**
@@ -24,13 +23,11 @@ import org.guetal.mp3.processing.commons.data.FrameDataUnpacked;
  * @author Administrator
  */
 public class Cut {
+	
+	private final static Logger LOGGER = Logger.getLogger(Cut.class.getName()); 
+	
     private byte [] stream;
-    private static InputStream is;
     private FrameBuffer frame_buffer;
-    
-    private int tot;
-    
-    private byte [] data_def;
     
     /** Creates a new instance of Delete */
     public Cut() {
@@ -46,20 +43,17 @@ public class Cut {
             throw new Exception("fStart can't be greater than fEnd!!");
         }
         
-        int len_buffer = fEnd - fStart + 1;
-        int n_frame = cont - len_buffer;
         frame_buffer = new FrameBuffer();
         
         FrameData fd ;
         final int option = Constants.HUFFMAN_DOMAIN;
         
         do{
-            System.out.println("---------------------------------------------(Step 1 - Iteration number: " + cont + ")---------------------------------------------");
-            
+
             try{
                 fd = reader.decodeFrame(option);
             } catch (Exception e){
-                System.out.println("End of file");
+                LOGGER.info("End of file");
                 break;
             }
             

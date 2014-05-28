@@ -36,7 +36,6 @@ public class FadeIn extends VolumeControl {
         int [] env = new int [len];
         for (int i = 0; i < len; i ++){
             env[i] = (int) Math.floor( - delta_gain * ((double) i / len));
-            System.out.println("env["+i+"]: " + env[i] );
         }
         
         is.read(stream);
@@ -75,7 +74,6 @@ public class FadeIn extends VolumeControl {
         int [] env = new int [len];
         for (int i = 0; i < len; i ++){
             env[i] = (int) Math.floor( - delta_gain * ((double) i / len));
-            System.out.println("env["+i+"]: " + env[i] );
         }
         if( fStart > fEnd ){
             throw new Exception("fStart can't be greater than fEnd!!");

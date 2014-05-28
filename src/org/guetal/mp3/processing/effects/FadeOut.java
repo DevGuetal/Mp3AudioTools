@@ -36,7 +36,6 @@ public class FadeOut extends VolumeControl {
         int [] env = new int [len];
         for (int i = 0; i < len; i ++){
             env[i] = (int) Math.floor( - delta_gain * ((double) i / len));
-            System.out.println("env["+i+"]: " + env[i] );
         }
         
         is.read(stream);
@@ -77,7 +76,6 @@ public class FadeOut extends VolumeControl {
         int [] env = new int [len];
         for (int i = 0; i < len; i ++){
             env[i] = (int) Math.floor( - delta_gain * ((double) i / len));
-            System.out.println("env["+i+"]: " + env[i] );
         }
         
         offset = super.sync_header(stream);

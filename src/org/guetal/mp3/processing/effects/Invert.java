@@ -9,9 +9,10 @@
 
 package org.guetal.mp3.processing.effects;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
+import org.guetal.mp3.processing.checker.Checker;
 import org.guetal.mp3.processing.commons.Constants;
 import org.guetal.mp3.processing.commons.Manager;
 import org.guetal.mp3.processing.commons.data.FrameBuffer;
@@ -26,11 +27,8 @@ import org.guetal.mp3.processing.commons.data.FrameDataUnpacked;
 public class Invert {
     private byte [] mp3_byte_stream;
     byte [] temp;
-    private static InputStream is;
     
-    private int tot;
-    
-    private byte [] data_def;
+	private final static Logger LOGGER = Logger.getLogger(Invert.class.getName()); 
     
     private Manager reader;
     
@@ -44,11 +42,7 @@ public class Invert {
         
         reader = new Manager(is);
         FrameData fd;
-        
-        int position = 0;
-        
-        int len_buffer = fEnd - fStart;
-        
+                
         if( frame_buffer.get_buffer_len() == 0){
             throw new Exception("Error: buffer is empty!!");
         }
@@ -57,13 +51,12 @@ public class Invert {
         frame_buffer.set_direction_reading(-1);
         
         do{
-            System.out.println("---------------------------------------------(Step 2 - Iteration number: " + cont + ")---------------------------------------------");
-            
+
             if (cont < fStart || cont >= fEnd ) {
                 try{
                     fd = reader.decodeFrame(opt);
                 } catch (Exception e){
-                    System.out.println("End of file");
+                    LOGGER.info("End of file");
                     break;
                 }
                 reader.storeData(fd, reader.getMainData());
