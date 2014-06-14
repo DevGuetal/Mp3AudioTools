@@ -36,7 +36,6 @@ public class Tremolo extends VolumeControl {
         int [] env = new int [period];
         for (int i = 0; i < period; i ++){
             env[i] =  (int)(gain * Math.sin(2 * Math.PI * i * fr)) - gain;
-            System.out.println("env["+i+"]: "+ env[i] );
         }
         
         is.read(stream);
@@ -73,7 +72,6 @@ public class Tremolo extends VolumeControl {
         int [] env = new int [period];
         for (int i = 0; i < period; i ++){
             env[i] =  (int)(gain * Math.sin(2 * Math.PI * i * fr)) - gain;
-            System.out.println("env["+i+"]: "+ env[i] );
         }
         
         is.read(stream);
@@ -111,7 +109,6 @@ public class Tremolo extends VolumeControl {
         int [] env = new int [period];
         for (int i = 0; i < period; i ++){
             env[i] =  (int)(gain * Math.sin(2 * Math.PI * i * fr)) - gain;
-            System.out.println("env["+i+"]: "+ env[i] );
         }
         
         is.read(stream);

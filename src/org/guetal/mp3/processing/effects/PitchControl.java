@@ -8,13 +8,11 @@
 // * and open the template in the editor.
 // */
 //
-//package processing.effects;
-//
 //import java.io.InputStream;
-//import processing.commons.Constants;
-//import processing.commons.data.FrameData;
-//import processing.commons.util.MathUtil;
-//import processing.commons.ReadAndStore;
+//import org.guetal.mp3.processing.commons.Constants;
+//import org.guetal.mp3.processing.commons.data.FrameData;
+//import org.guetal.mp3.processing.commons.util.MathUtil;
+//import org.guetal.mp3.processing.commons.ReadAndStore;
 //
 ///**
 // *

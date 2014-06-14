@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.fileManager.FileManager;
 import org.guetal.mp3.processing.commons.data.FrameBuffer;
@@ -24,14 +25,16 @@ import org.guetal.mp3.processing.effects.Invert;
  * @version
  */
 public class InvertExample  {
-    //
+    
+	private final static Logger LOGGER = Logger.getLogger(InvertExample.class.getName()); 
+	
     private String fileName = System.getProperty("user.dir") + "/input/song.mp3";
     //private String fileName = "/audio/mic.mp3";
     //private String fileName = "/audio/song.mp3";
     private Invert effect;
     private byte [] stream;
     
-    public void startApp() throws FileNotFoundException {
+    public void startApp() throws FileNotFoundException {    	
     	
     	File inputFile = new File(fileName);
         InputStream is = new FileInputStream(inputFile);
@@ -51,13 +54,13 @@ public class InvertExample  {
             is.close();
             is2.close();
             long tempo2=System.currentTimeMillis();
-            System.out.println("time elapsed (ms): " + (tempo2 - tempo1));
+            LOGGER.info("time elapsed (ms): " + (tempo2 - tempo1));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         file.saveMedia(stream, "audio/");
-        System.out.println("FILE SAVED");
+        LOGGER.info("FILE SAVED");
         
     }
     

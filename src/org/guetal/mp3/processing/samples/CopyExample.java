@@ -7,6 +7,7 @@
 package org.guetal.mp3.processing.samples;
 
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.mp3.processing.effects.Copy;
 
@@ -17,27 +18,23 @@ import org.guetal.mp3.processing.effects.Copy;
  * @version
  */
 public class CopyExample {
-    //private String fileName = "/audio/trombe.mp3";
-    //private String fileName = "/audio/mic.mp3";
     private String fileName = "/audio/song.mp3";
-   // private String fileName = "audio/440-128-CBR.mp3";
     private Copy effect;
 
+    private final static Logger LOGGER = Logger.getLogger(CopyExample.class.getName()); 
     
     public void startApp() {
         InputStream is = getClass().getResourceAsStream(fileName);
         
-//        FileManager file = new FileManager();
-        
         effect = new Copy();
         
         try {
-            long tempo1=System.currentTimeMillis();
+            long time1=System.currentTimeMillis();
             
             effect.copy(is, 50, 200);
             
-            long tempo2=System.currentTimeMillis();
-            System.out.println("time elapsed (ms): " + (tempo2 - tempo1));
+            long time2=System.currentTimeMillis();
+            LOGGER.info("time elapsed (ms): " + (time2 - time1));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

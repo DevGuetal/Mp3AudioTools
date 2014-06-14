@@ -12,7 +12,6 @@ package org.guetal.mp3.processing.effects;
 import java.io.InputStream;
 import java.util.logging.Logger;
 
-import org.guetal.mp3.processing.checker.Checker;
 import org.guetal.mp3.processing.commons.Constants;
 import org.guetal.mp3.processing.commons.Manager;
 import org.guetal.mp3.processing.commons.data.FrameBuffer;

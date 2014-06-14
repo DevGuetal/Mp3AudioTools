@@ -7,6 +7,7 @@
 package org.guetal.mp3.processing.samples;
 
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.mp3.processing.effects.Analysis;
 
@@ -17,18 +18,19 @@ import org.guetal.mp3.processing.effects.Analysis;
  * @version
  */
 public class AnalisysExample {
-    private Analysis effect;
-    private String fileName = "/audio/U2.mp3";
+
+	private final static Logger LOGGER = Logger.getLogger(AnalisysExample.class.getName()); 
+
+	private String fileName = "/audio/U2.mp3";
 
     public void startApp() {
         
-        byte [] stream;
         InputStream is = getClass().getResourceAsStream(fileName);
         
         try {            
             double duration = Analysis.calc_duration(is);
             
-            System.out.println("Length of file (sec): " + duration);
+            LOGGER.info("Length of file (sec): " + duration);
 
             is.close();
         } catch (Exception ex) {

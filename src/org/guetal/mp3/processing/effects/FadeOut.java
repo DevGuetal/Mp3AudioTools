@@ -78,8 +78,7 @@ public class FadeOut extends VolumeControl {
             env[i] = (int) Math.floor( - delta_gain * ((double) i / len));
         }
         
-        offset = super.sync_header(stream);
-        
+        offset = super.sync_header(stream);        
         
         while (offset < stream.length - 31)       {
             int bitrate = (stream [2 + offset] & 0xf0) >>> 4;

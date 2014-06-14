@@ -67,35 +67,6 @@ public class SideInfoEnc {
         store_scfsi();
         store_granule_info();
      
-        
-        ////////////
-//        System.out.println("/////////////////////////////// frame in scrittura ////////////////////////////////////////////////////");
-//        System.out.println("side_info_enc -> main_data_beg: "+ this.main_data_beg );
-//        for(int ch = 0; ch < channels; ch++)
-//            for(int ch = 0; ch < 2; ch++){
-//            System.out.println("");
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].window_switching_flag: "+ this.ch[ch].ch[ch].window_switching_flag );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].big_values: "+ this.ch[ch].ch[ch].big_values );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"]count1table_select: "+ this.ch[ch].ch[ch].count1table_select );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].global_gain: "+ this.ch[ch].ch[ch].global_gain );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].part2_3_length: "+ this.ch[ch].ch[ch].part2_3_length );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].part2_length: "+ this.ch[ch].ch[ch].part2_length );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].preflag: "+ this.ch[ch].ch[ch].preflag );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].region0_count: "+ this.ch[ch].ch[ch].region0_count );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].region1_count: "+ this.ch[ch].ch[ch].region1_count );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].scalefac_compress: "+ this.ch[ch].ch[ch].scalefac_compress );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].scalefac_scale: "+ this.ch[ch].ch[ch].scalefac_scale );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].table_select[0: "+ this.ch[ch].ch[ch].table_select[0] );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].table_select[1: "+ this.ch[ch].ch[ch].table_select[1] );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].table_select[2: "+ this.ch[ch].ch[ch].table_select[2] );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].block type: "+ this.ch[ch].ch[ch].block_type );
-//            
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].mixed_block_flag: "+ this.ch[ch].ch[ch].mixed_block_flag );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"].scalefac_scale: "+ this.ch[ch].ch[ch].scalefac_scale );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"][0].subblock_gain: "+ this.ch[ch].ch[ch].subblock_gain[0] );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"][1].subblock_gain: "+ this.ch[ch].ch[ch].subblock_gain[1] );
-//            System.out.println("side_info_enc -> ch["+ch+"].ch["+ch+"][2].subblock_gain: "+ this.ch[ch].ch[ch].subblock_gain[2] );
-//            }
         return format.get_array();
     }
     

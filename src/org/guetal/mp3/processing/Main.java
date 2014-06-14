@@ -10,7 +10,6 @@ public class Main {
 		try {
 			test.startApp();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

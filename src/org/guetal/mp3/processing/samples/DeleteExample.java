@@ -7,6 +7,7 @@
 package org.guetal.mp3.processing.samples;
 
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.mp3.processing.effects.Delete;
 
@@ -17,31 +18,26 @@ import org.guetal.mp3.processing.effects.Delete;
  * @version
  */
 public class DeleteExample {
-    //
+	
+	
+	private final static Logger LOGGER = Logger.getLogger(DeleteExample.class.getName()); 
     private String fileName = "/audio/song.mp3";
-    //private String fileName = "/audio/mic.mp3";
-    //private String fileName = "/audio/song.mp3";
     private Delete effect;
-    private byte [] stream;
     
     public void startApp() {
         InputStream is = getClass().getResourceAsStream(fileName);
         
-        InputStream real = getClass().getResourceAsStream(fileName);
-        
-//        FileManager file = new FileManager();
-        
         effect = new Delete();
+        
         try {
             long tempo1=System.currentTimeMillis();
-            stream = effect.delete(is, 15, 400);
+            effect.delete(is, 15, 400);
             is.close();
             
             long tempo2=System.currentTimeMillis();
-            System.out.println("time elapsed (ms): " + (tempo2 - tempo1));
+            LOGGER.info("time elapsed (ms): " + (tempo2 - tempo1));
             
-//            file.saveMedia(stream, "audio/");
-            System.out.println("FILE SAVED");
+            LOGGER.info("FILE SAVED");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

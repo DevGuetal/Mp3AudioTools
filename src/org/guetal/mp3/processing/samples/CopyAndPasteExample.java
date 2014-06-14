@@ -7,11 +7,9 @@
 package org.guetal.mp3.processing.samples;
 
 import java.io.InputStream;
+import java.util.logging.Logger;
 
-import org.guetal.mp3.processing.commons.data.FrameBuffer;
 import org.guetal.mp3.processing.effects.Analysis;
-import org.guetal.mp3.processing.effects.Copy;
-import org.guetal.mp3.processing.effects.Paste;
 
 
 /**
@@ -21,29 +19,21 @@ import org.guetal.mp3.processing.effects.Paste;
  */
 public class CopyAndPasteExample {
     private String fileName = "/audio/U2.mp3";
-    private Paste effect;
-    private Copy copy;
-    private byte [] stream;
+    
+    private final static Logger LOGGER = Logger.getLogger(CopyAndPasteExample.class.getName()); 
     
     public void startApp() {
         InputStream is = getClass().getResourceAsStream(fileName);
-        InputStream is2 = getClass().getResourceAsStream(fileName);
-        
-        copy = new Copy();
-        effect = new Paste();
-        
-        
+            
         try {
             long time1=System.currentTimeMillis();
             
-            FrameBuffer buffer  = copy.copy(is, 0, 100);
-            stream = effect.paste(is2, 20, buffer);
-            
-            long time2=System.currentTimeMillis();
-            System.out.println("time elapsed (ms): " + (time2 - time1));
-            
             is = getClass().getResourceAsStream(fileName);
             Analysis.average_bitrate(is);
+            
+            long time2=System.currentTimeMillis();
+            LOGGER.info("time elapsed (ms): " + (time2 - time1));
+            
             
         } catch (Exception ex) {
             ex.printStackTrace();

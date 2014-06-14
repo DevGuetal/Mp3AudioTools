@@ -7,6 +7,7 @@
 package org.guetal.mp3.processing.samples;
 
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.fileManager.FileManager;
 import org.guetal.mp3.processing.effects.VolumeControl;
@@ -20,12 +21,14 @@ import org.guetal.mp3.processing.effects.VolumeControl;
  */
 public class VolumeExample {
     private VolumeControl effect;
-    private String fileName = "/audio/U2.mp3";
+    private String fileName = "/song.mp3";
 
+    private final static Logger LOGGER = Logger.getLogger(VolumeExample.class.getName()); 
+    
     public void startApp() {
 
         byte [] stream;
-        InputStream is = getClass().getResourceAsStream(fileName);
+        InputStream is = FileManager.getInputStream(fileName);
         
         effect = new VolumeControl();
         
@@ -37,10 +40,10 @@ public class VolumeExample {
             is.close();
             
             long time2 = System.currentTimeMillis();
-            System.out.println("time elapsed (ms): " + (time2 - time1));
+            LOGGER.info("time elapsed (ms): " + (time2 - time1));
             
             file.saveMedia(stream, "audio/");
-            System.out.println("FILE SAVED");
+            LOGGER.info("FILE SAVED");
 
         } catch (Exception ex) {
             ex.printStackTrace();

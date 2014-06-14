@@ -21,7 +21,6 @@ public class EnergyCalculationExample {
     private EnergyCalculation effect;
     float [][] E;
 
-    private InputStream is;
     private String fileName = "/audio/U2.mp3";
     
     public void startApp() {

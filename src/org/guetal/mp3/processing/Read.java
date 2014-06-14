@@ -40,7 +40,7 @@ public class Read {
             if((i % 418) == 25)  sb.append(" <-- begin of frame " + (i / 418 + 1));
             
             if((i % 418) == 29){
-                System.out.print(" <-- main_data_beg: ");
+                sb.append(" <-- main_data_beg: ");
                 int beg = (b[i] >= 0) ? ((b[i] << 1)+((b[i+1]>>> 7) & 1)): (((b[i] + 256) << 1)+((b[i+1]>>> 7) & 1));
                 sb.append(beg);
             }

@@ -26,10 +26,8 @@ public class LayerIIIEnc {
     private Mp3Frame [] mpf;    //  circular buffer of SIZE length
     
     private int index;
-    private int version;
     private int frame_num;
     private final int MAX_RES_SIZE = 511;
-    private final int MAX_N_BACK = 9;
     
     
     /**
@@ -37,8 +35,6 @@ public class LayerIIIEnc {
      */
     public LayerIIIEnc(int size) {
         index = -1;
-        //main_data_beg = 0;
-        version = 1;
         frame_num = 0;
         this.SIZE = size;
         mpf = new Mp3Frame [SIZE];
@@ -49,8 +45,6 @@ public class LayerIIIEnc {
      */
     public LayerIIIEnc() {
         index = -1;
-        //main_data_beg = 0;
-        version = 1;
         frame_num = -1;
         this.SIZE = 10;
         mpf = new Mp3Frame [SIZE];
@@ -139,10 +133,8 @@ public class LayerIIIEnc {
      */
     public int store_data(byte [] data, FrameData fd){
         int free_space      = 0;
-        int size            = 0;
         int n_step_back     = 0;
         int offset          = 0;
-        int main_data_beg   = 0;
         
         int main_data_len = fd.getMdLen();
         int i = frame_num > 0? index - 1: 0;
@@ -177,13 +169,10 @@ public class LayerIIIEnc {
             fd.updateFrameLen();
             mpf[index].setBitrate(bitrate, fd.getFramesize(), fd.getNSlots());
             
-            System.out.println("bitrate modified at frame " + frame_num + ": " + bitrate);
             return 0;
         }
         
         /* storing in the reserve */
-        int start = (index - n_step_back) > 0 ? index - n_step_back: 0;
-        
         if( n_step_back > frame_num ) n_step_back = frame_num; // 8/6/2007
         
         if(anc_space > 0){

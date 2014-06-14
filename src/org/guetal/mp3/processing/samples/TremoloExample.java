@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.fileManager.FileManager;
 import org.guetal.mp3.processing.effects.Tremolo;
@@ -22,8 +23,11 @@ import org.guetal.mp3.processing.effects.Tremolo;
  * @version
  */
 public class TremoloExample {
+	
+	private final static Logger LOGGER = Logger.getLogger(TremoloExample.class.getName()); 
+	
     private Tremolo effect;
-    private String fileName = System.getProperty("user.dir") + "/output/test.mp3";
+    private String fileName = System.getProperty("user.dir") + "/input/song.mp3";
 
     public void startApp() throws FileNotFoundException {
         byte [] stream;
@@ -37,7 +41,7 @@ public class TremoloExample {
             stream = effect.tremolo(is, 6, 50);
             FileManager file = new FileManager();
             file.saveMedia(stream, "audio/");
-            System.out.println("FILE SAVED");
+            LOGGER.info("FILE SAVED");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

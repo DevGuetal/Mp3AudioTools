@@ -10,6 +10,7 @@
 package org.guetal.mp3.processing.effects;
 
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.mp3.processing.commons.CommonMethods;
 
@@ -19,6 +20,9 @@ import org.guetal.mp3.processing.commons.CommonMethods;
  * @author Administrator
  */
 public class VolumeControl {
+	
+	private final static Logger LOGGER = Logger.getLogger(VolumeControl.class.getName()); 
+	
     int cont = 0;
     byte [] stream;
     /** Creates a new instance of VolumeControl */
@@ -36,8 +40,6 @@ public class VolumeControl {
         
         is.read(stream);
         
-//        for(int i = 0; i < 20; i++)
-//            System.out.println(i+") "+ stream[i]);
         offset = sync_header(stream);
         
         
@@ -69,8 +71,6 @@ public class VolumeControl {
         
         is.read(stream);
         
-//        for(int i = 0; i < 20; i++)
-//            System.out.println(i+") "+ stream[i]);
         offset = sync_header(stream);
         
         
@@ -104,8 +104,6 @@ public class VolumeControl {
         
         is.read(stream);
         
-//        for(int i = 0; i < 20; i++)
-//            System.out.println(i+") "+ stream[i]);
         offset = sync_header(stream);
         
         
@@ -136,13 +134,6 @@ public class VolumeControl {
         global_gain[1] = ((stream [16 + offset] & 0x0f) << 4 )+ ((stream [17 + offset] & 0xf0) >>> 4 );
         global_gain[2] = ((stream [23 + offset] & 0x01) << 7 )+ ((stream [24 + offset] & 0xfe) >>> 1 );
         global_gain[3] = ((stream [31 + offset] & 0x3f) << 2 )+ ((stream [32 + offset] & 0xc0) >>> 6 );
-        
-        
-        
-//            System.out.println("globalgain: " + global_gain[0]);
-//            System.out.println("globalgain: " + global_gain[1]);
-//            System.out.println("globalgain: " + global_gain[2]);
-//            System.out.println("globalgain: " + global_gain[3]);
         
         int new_gain = calc_gain(global_gain[0], gain);
         
@@ -194,15 +185,7 @@ public class VolumeControl {
         global_gain[2] = ((stream [23 + offset] & 0x01) << 7 )+ ((stream [24 + offset] & 0xfe) >>> 1 );
         global_gain[3] = ((stream [31 + offset] & 0x3f) << 2 )+ ((stream [32 + offset] & 0xc0) >>> 6 );
         
-        
-        
-//            System.out.println("globalgain: " + global_gain[0]);
-//            System.out.println("globalgain: " + global_gain[1]);
-//            System.out.println("globalgain: " + global_gain[2]);
-//            System.out.println("globalgain: " + global_gain[3]);
-        
         int new_gain = calc_gain(global_gain[0], factor);
-        System.out.println("new_gain: " + new_gain);
         
         int part1 = new_gain >>> 1;
         int part2 = (new_gain & 0x1) <<  7;
@@ -213,7 +196,6 @@ public class VolumeControl {
         
         
         new_gain = calc_gain(global_gain[1], factor);
-        System.out.println("new_gain: " + new_gain);
         part1 = new_gain >>> 4;
         part2 = (new_gain & 0x0f) << 4;
         stream[16 + offset] = (byte) (((stream[16 + offset] & 0xf0) + part1) & 0xff);
@@ -222,7 +204,7 @@ public class VolumeControl {
         
         
         new_gain = calc_gain(global_gain[2], factor);
-        System.out.println("new_gain: " + new_gain);
+        
         part1 = new_gain >>> 7;
         part2 = (new_gain & 0x7f) << 1;
         stream[23 + offset] = (byte) (((stream[23 + offset] & 0xfe) + part1) & 0xff);
@@ -230,7 +212,6 @@ public class VolumeControl {
         
         
         new_gain = calc_gain(global_gain[3], factor);
-        System.out.println("new_gain: " + new_gain);
         part1 = new_gain >>> 2;
         part2 = (new_gain & 0x03) << 6;
         stream[31 + offset] = (byte) (((stream[31 + offset] & 0xc0) + part1) & 0xff);
@@ -247,13 +228,13 @@ public class VolumeControl {
     private int calc_gain(int global_gain, int gain){
         int new_gain = global_gain + gain;
         if(new_gain < 0){
-            System.out.println("gain too low at frame " + cont);
-            System.out.println("volume increased by " + (-new_gain * 1.5) +" db" );
+            LOGGER.info("gain too low at frame " + cont);
+            LOGGER.info("volume increased by " + (-new_gain * 1.5) +" db" );
             new_gain = 0;
         }
         if(new_gain > 255)  {
-            System.out.println("gain too high at frame " + cont);
-            System.out.println("volume reduced by " + (new_gain * 1.5) +" db" );
+            LOGGER.info("gain too high at frame " + cont);
+            LOGGER.info("volume reduced by " + (new_gain * 1.5) +" db" );
             new_gain = 255;
         }
         
@@ -263,13 +244,13 @@ public class VolumeControl {
     private int calc_gain(int global_gain, double factor){
         int new_gain = (int)Math.floor(global_gain * factor);
         if(new_gain < 0){
-            System.out.println("gain too low at frame " + cont);
-            System.out.println("volume increased by " + (-new_gain * 1.5) +" db" );
+        	LOGGER.info("gain too low at frame " + cont);
+        	LOGGER.info("volume increased by " + (-new_gain * 1.5) +" db" );
             new_gain = 0;
         }
         if(new_gain > 255)  {
-            System.out.println("gain too high at frame " + cont);
-            System.out.println("volume reduced by " + (new_gain * 1.5) +" db" );
+        	LOGGER.info("gain too high at frame " + cont);
+        	LOGGER.info("volume reduced by " + (new_gain * 1.5) +" db" );
             new_gain = 255;
         }
         

@@ -10,6 +10,7 @@
 package org.guetal.mp3.processing.effects;
 
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.mp3.processing.commons.Constants;
 import org.guetal.mp3.processing.commons.Manager;
@@ -22,6 +23,8 @@ import org.guetal.mp3.processing.commons.util.MathUtil;
  */
 public class Filtering {
     
+	private final static Logger LOGGER = Logger.getLogger(Filtering.class.getName()); 
+	
     Manager reader;
     byte [] stream;
     /** Creates a new instance of Filtering */
@@ -77,7 +80,7 @@ public class Filtering {
                 bytes += fd.getFramesize();
                 
             } catch (Exception ex){
-                System.out.println("End of file");
+                LOGGER.info("End of file");
                 break;
             }
             

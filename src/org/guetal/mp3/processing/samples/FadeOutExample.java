@@ -7,6 +7,7 @@
 package org.guetal.mp3.processing.samples;
 
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.guetal.fileManager.FileManager;
 import org.guetal.mp3.processing.effects.FadeOut;
@@ -20,12 +21,14 @@ import org.guetal.mp3.processing.effects.FadeOut;
  */
 public class FadeOutExample {
     private FadeOut effect;
-    private String fileName = "/audio/usa.mp3";
+    private String fileName = "song.mp3";
 
+    private final static Logger LOGGER = Logger.getLogger(FadeOutExample.class.getName()); 
+    
     public void startApp() {
 
         byte [] stream;
-        InputStream is = getClass().getResourceAsStream(fileName);
+        InputStream is = FileManager.getInputStream(fileName);
         
         effect = new FadeOut();
         
@@ -35,11 +38,11 @@ public class FadeOutExample {
             is.close();
             
             long time2 = System.currentTimeMillis();
-            System.out.println("time elapsed (ms): " + (time2 - time1));
+            LOGGER.info("time elapsed (ms): " + (time2 - time1));
             
             FileManager file = new FileManager();
             file.saveMedia(stream, "audio/");
-            System.out.println("FILE SAVED");
+            LOGGER.info("FILE SAVED");
 
         } catch (Exception ex) {
             ex.printStackTrace();

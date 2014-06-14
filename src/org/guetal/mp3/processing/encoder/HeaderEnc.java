@@ -1,6 +1,5 @@
 package org.guetal.mp3.processing.encoder;
 
-import org.guetal.mp3.processing.commons.data.FrameData;
 
 /**
  *  The following class generates a 4-bytes array specificating the mp3 frame headerstring.
